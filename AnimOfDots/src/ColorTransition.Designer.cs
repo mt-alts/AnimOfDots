@@ -1,7 +1,7 @@
 ﻿
 namespace AnimOfDots
 {
-    partial class SpiralLoading
+    partial class ColorTransition
     {
         /// <summary> 
         ///Gerekli tasarımcı değişkeni.
@@ -31,13 +31,13 @@ namespace AnimOfDots
         {
             this.SuspendLayout();
             // 
-            // SpiralLoading
+            // ColorTransition
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "SpiralLoading";
-            this.Load += new System.EventHandler(this.SpiralLoading_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.SpiralLoading_Paint);
+            this.Name = "ColorTransition";
+            this.Load += new System.EventHandler(this.ColorTransition_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.ColorTransition_Paint);
             this.ResumeLayout(false);
 
         }

@@ -1,7 +1,7 @@
 ﻿
 namespace AnimOfDots
 {
-    partial class SpiralLoading
+    partial class ColorfulCircularLoading
     {
         /// <summary> 
         ///Gerekli tasarımcı değişkeni.
@@ -31,13 +31,13 @@ namespace AnimOfDots
         {
             this.SuspendLayout();
             // 
-            // SpiralLoading
+            // ColorfulCircularLoading
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "SpiralLoading";
-            this.Load += new System.EventHandler(this.SpiralLoading_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.SpiralLoading_Paint);
+            this.Name = "ColorfulCircularLoading";
+            this.Load += new System.EventHandler(this.ColorfulCircularLoading_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.ColorfulCircularLoading_Paint);
             this.ResumeLayout(false);
 
         }

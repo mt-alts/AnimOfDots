@@ -1,7 +1,7 @@
 ﻿
 namespace AnimOfDots
 {
-    partial class SpiralLoading
+    partial class Overlay
     {
         /// <summary> 
         ///Gerekli tasarımcı değişkeni.
@@ -31,13 +31,13 @@ namespace AnimOfDots
         {
             this.SuspendLayout();
             // 
-            // SpiralLoading
+            // Overlay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "SpiralLoading";
-            this.Load += new System.EventHandler(this.SpiralLoading_Load);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.SpiralLoading_Paint);
+            this.Name = "Overlay";
+            this.Load += new System.EventHandler(this.Overlay_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Overlay_Paint);
             this.ResumeLayout(false);
 
         }

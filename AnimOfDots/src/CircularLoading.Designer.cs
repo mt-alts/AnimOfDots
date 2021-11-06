@@ -1,5 +1,5 @@
 ﻿
-namespace AnimOfDots.src
+namespace AnimOfDots
 {
     partial class CircularLoading
     {
