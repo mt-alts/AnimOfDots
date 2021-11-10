@@ -57,4 +57,3 @@ Screenshot:
 | Name            | Description   	        |
 | -------------   |:-----------------------:|
 | AnimationSpeed  | Set animation speed     |
-| Colors          | Sets the color of dots  |
