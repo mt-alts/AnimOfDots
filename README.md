@@ -56,4 +56,4 @@ Screenshot:
 #### Wavy
 | Name            | Description   	        |
 | -------------   |:-----------------------:|
-| AnimationSpeed  | Set animation speed     |
+| ForeColor       | Sets the color of dots  |
