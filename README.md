@@ -24,7 +24,7 @@ Screenshot:
 !: The method name of all AnimOfDots controls is the same and performs the same function.
 
 ### Properties
-##
+
 #### CircularLoading
 | Name            | Description   	        |
 | -------------   |:-----------------------:|
