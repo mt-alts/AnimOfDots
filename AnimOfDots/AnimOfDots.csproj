@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{677E5818-1DB9-4B4B-9BFC-8D339702CEED}</ProjectGuid>
+    <ProjectGuid>{2D416DE4-0D4C-475C-939A-5B2BC9AFA893}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>AnimOfDots</RootNamespace>
     <AssemblyName>aod</AssemblyName>
-    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -21,7 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,33 +29,6 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <RunCodeAnalysis>false</RunCodeAnalysis>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>7.3</LangVersion>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -72,63 +44,45 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\CircularLoading.cs">
+    <Compile Include="res\resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="src\BouncingDots.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\CircularLoading.Designer.cs">
-      <DependentUpon>CircularLoading.cs</DependentUpon>
-    </Compile>
-    <Compile Include="src\ColorfulCircularLoading.cs">
+    <Compile Include="src\Circular.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\ColorfulCircularLoading.Designer.cs">
-      <DependentUpon>ColorfulCircularLoading.cs</DependentUpon>
-    </Compile>
-    <Compile Include="src\ColorTransition.cs">
+    <Compile Include="src\ColorfulCircular.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\ColorTransition.Designer.cs">
-      <DependentUpon>ColorTransition.cs</DependentUpon>
+    <Compile Include="src\ColorfulDot.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="src\Overlay.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\Overlay.Designer.cs">
-      <DependentUpon>Overlay.cs</DependentUpon>
-    </Compile>
-    <Compile Include="src\SpiralLoading.cs">
+    <Compile Include="src\Spiral.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\SpiralLoading.Designer.cs">
-      <DependentUpon>SpiralLoading.cs</DependentUpon>
-    </Compile>
-    <Compile Include="src\Wavy.cs">
+    <Compile Include="src\ThreeDot.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\Wavy.Designer.cs">
-      <DependentUpon>Wavy.cs</DependentUpon>
+    <Compile Include="src\WaterDropWaves.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="src\CircularLoading.resx">
-      <DependentUpon>CircularLoading.cs</DependentUpon>
+    <EmbeddedResource Include="res\resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\ColorfulCircularLoading.resx">
-      <DependentUpon>ColorfulCircularLoading.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="src\ColorTransition.resx">
-      <DependentUpon>ColorTransition.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="src\Overlay.resx">
-      <DependentUpon>Overlay.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="src\SpiralLoading.resx">
-      <DependentUpon>SpiralLoading.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="src\Wavy.resx">
-      <DependentUpon>Wavy.cs</DependentUpon>
-    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\colors.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

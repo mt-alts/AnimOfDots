@@ -3,79 +3,147 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace AnimOfDots {
-    public partial class Overlay : UserControl {
-
-        private Image image;
+namespace AnimOfDots
+{
+    public class Overlay : UserControl
+    {
+        private Bitmap bitmapColorPalette;
         private Timer timer = new Timer();
-        private RectangleF[] rectangles = new RectangleF[8];
+        private RectangleF[] rects = new RectangleF[8];
+        private Color[] colorPixelArray = new Color[8];
         private float dotSize = 24;
         private PointF[] pf = new PointF[8];
         private float sizeW = 0, sizeH = 0;
-        private int rotation = 0;
-        private const int ANIMATION_MAX_SPEED = 100;
+        private int[] imagePixel;
+        private bool isActivated = false;
+        private const byte ANIMATION_MAX_SPEED = 101;
 
-        private short animationSpeed = 60;
-        public short AnimationSpeed {
+        private byte animationSpeed = 60;
+        public byte AnimationSpeed
+        {
             get { return animationSpeed; }
-            set {
+            set
+            {
                 if (value < ANIMATION_MAX_SPEED)
+                {
+                    timer.Interval = (ANIMATION_MAX_SPEED * 2) - (value * 2);
                     animationSpeed = value;
+                }
                 else
+                {
                     throw new Exception("Error: Value cannot be greater than " + ANIMATION_MAX_SPEED);
+                }
             }
         }
 
-        public short RotationStep { get; set; } = 7;
-
-        public Color PrimaryColor { get; set; } = Color.FromArgb(21, 101, 192);
-
-        public Color SecondaryColor { get; set; } = Color.FromArgb(100, 181, 246);
-
-        public override Color BackColor { get => Color.Transparent; }
-
-        public override Color ForeColor { get => Color.Transparent; }
-
-        public Overlay()  {
-            InitializeComponent();
-
-            this.Width = 48; this.Height = 48;
-            image = new Bitmap(this.Width, this.Height);
+        private Color[] colors = new Color[3] { Color.DodgerBlue,
+                                               Color.FromArgb(100, Color.DeepSkyBlue),
+                                               Color.FromArgb(0, Color.LightSkyBlue) };
+        public Color[] Colors
+        {
+            get { return colors; }
+            set
+            {
+                colors = value;
+                this.CreateColorPalette();
+                this.SetColors();
+                this.Invalidate();
+            }
         }
 
-        private void Overlay_Load(object sender, EventArgs e) {
+        private bool isEnabled = false;
+        public bool IsEnabled
+        {
+            get { return isEnabled; }
+            set
+            {
+                if (value)
+                {
+                    isEnabled = value;
+                    this.Start();
+                }
+                else
+                {
+                    isEnabled = value;
+                    this.Stop();
+                    this.Initialize();
+                    this.Visible = true;
+                }
+            }
+        }
+
+        public override Color ForeColor { get => base.ForeColor; }
+
+        public Overlay()
+        {
+            timer.Tick += new EventHandler(Timer_Tick);
+
+            this.Size = new Size(48, 48);
             this.DoubleBuffered = true;
-
-            timer.Interval = ANIMATION_MAX_SPEED - animationSpeed;
-            timer.Tick += new EventHandler(timer_tick);
+            this.Initialize();
         }
 
-        public void Play() {
-            timer.Enabled = true;
+        private void Initialize()
+        {
+            imagePixel = new int[8] { 7, 6, 5, 4, 3, 2, 1, 0 };
+
+            this.CreateColorPalette();
+            this.SetPoints();
+            this.SetColors();
+            this.SetRectangles();
         }
 
-        public void Pause() {
-            timer.Enabled = false;
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            for (int i = 0; i < imagePixel.Length; i++)
+            {
+                imagePixel[i] = (imagePixel[i] + 1) % bitmapColorPalette.Width;
+            }
+
+            SetColors();
+            this.Refresh();
         }
 
-        public void Stop() {
-            timer.Enabled = false;
-            rotation = 0;
+        private void Activate(bool value)
+        {
+            if (value)
+            {
+                this.Initialize();
+            }
+
+            timer.Enabled = value;
+            this.Visible = value;
+            isActivated = value;
+            isEnabled = value;
         }
 
-        private void timer_tick(Object sender, EventArgs e) {
-            rotation = (rotation + RotationStep) % 360;
-            Invalidate();
+        public void Start()
+        {
+            if (!isActivated)
+            {
+                this.Initialize();
+                this.Activate(true);
+            }
         }
 
-        private void SetScale() {
+        public void Stop()
+        {
+            if (isActivated)
+            {
+                this.Activate(false);
+            }
+        }
+
+        private void SetScale()
+        {
             dotSize = this.Height / 4.5f;
             sizeW = this.Width - dotSize;
             sizeH = this.Height - dotSize;
         }
 
-        private void SetPoints() {
-            SetScale();
+        private void SetPoints()
+        {
+            this.SetScale();
             pf[0] = new PointF(sizeW / 2, 0);
             pf[2] = new PointF(sizeW, sizeH / 2);
             pf[4] = new PointF(sizeW / 2, sizeH);
@@ -86,46 +154,54 @@ namespace AnimOfDots {
             pf[7] = new PointF(pf[0].X / 3, pf[6].Y / 3);
         }
 
-        protected override void OnResize(EventArgs e) {
-            SetPoints();
-
-            for (int i = 0; i < rectangles.Length; i++)
-                rectangles[i] = new RectangleF(pf[i].X, pf[i].Y, dotSize, dotSize);
-
-            using (GraphicsPath gp = new GraphicsPath()) {
-                for (int i = 0; i < rectangles.Length; i++)
-                    gp.AddEllipse(rectangles[i]);
-                this.Region = new Region(gp);
+        private void CreateColorPalette()
+        {
+            bitmapColorPalette = new Bitmap(8, 2);
+            using (Graphics graphics = Graphics.FromImage(bitmapColorPalette))
+            {
+                Rectangle rectangle = new Rectangle(0, 0, bitmapColorPalette.Width, bitmapColorPalette.Height);
+                LinearGradientBrush gradientBrush = new LinearGradientBrush(rectangle, Color.Transparent, Color.Transparent, 360);
+                ColorBlend colorBlend = new ColorBlend(3);
+                colorBlend.Colors = this.Colors;
+                colorBlend.Positions = new float[3] { 0.0f, 0.5f, 1.0f };
+                gradientBrush.InterpolationColors = colorBlend;
+                graphics.FillRectangle(gradientBrush, rectangle);
             }
+        }
+
+        private void SetColors()
+        {
+            for (int i = 0; i < colorPixelArray.Length; i++)
+            {
+                colorPixelArray[i] = bitmapColorPalette.GetPixel(imagePixel[i], 1);
+            }
+        }
+
+        private void SetRectangles()
+        {
+            for (int i = 0; i < rects.Length; i++)
+            {
+                rects[i] = new RectangleF(pf[i].X, pf[i].Y, dotSize, dotSize);
+            }
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            this.Initialize();
             base.OnResize(e);
         }
 
-        protected override void OnPaint(PaintEventArgs e) {
-            image = new Bitmap(this.Width, this.Height);
-            using (Graphics graphics = Graphics.FromImage(image)) {
-                graphics.Clear(Color.Transparent);
-                GraphicsPath graphicsPath = new GraphicsPath();
-                graphicsPath.AddEllipse(this.ClientRectangle);
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
+            e.Graphics.Clear(this.BackColor);
 
-                PathGradientBrush pathGradientBrush = new PathGradientBrush(graphicsPath);
-
-                pathGradientBrush.CenterPoint = new PointF(this.ClientRectangle.Width / 2, 0);
-                pathGradientBrush.CenterColor = PrimaryColor;
-                pathGradientBrush.SurroundColors = new Color[] { SecondaryColor };
-
-                graphics.FillPath(pathGradientBrush, graphicsPath);
-
-                pathGradientBrush.Dispose();
-                graphicsPath.Dispose();
+            for (int i = 0; i < rects.Length; i++)
+            {
+                e.Graphics.FillEllipse(new SolidBrush(colorPixelArray[i]), rects[i]);
             }
-            base.OnPaint(e);
-        }
 
-        private void Overlay_Paint(object sender, PaintEventArgs e) {
-            e.Graphics.TranslateTransform(this.Width / 2, this.Height / 2);
-            e.Graphics.RotateTransform(rotation);
-            e.Graphics.TranslateTransform(-this.Width / 2, -this.Height / 2);
-            e.Graphics.DrawImage(image, new Point(0, 0));
+            base.OnPaint(e);
         }
     }
 }
