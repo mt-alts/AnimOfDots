@@ -1,0 +1,6 @@
+C:\Users\Senato\source\repos\r\GitRepo\AnimOfDots\AnimOfDots\bin\Debug\aod.dll
+C:\Users\Senato\source\repos\r\GitRepo\AnimOfDots\AnimOfDots\bin\Debug\aod.pdb
+C:\Users\Senato\source\repos\r\GitRepo\AnimOfDots\AnimOfDots\obj\Debug\AnimOfDots.csproj.AssemblyReference.cache
+C:\Users\Senato\source\repos\r\GitRepo\AnimOfDots\AnimOfDots\obj\Debug\AnimOfDots.csproj.CoreCompileInputs.cache
+C:\Users\Senato\source\repos\r\GitRepo\AnimOfDots\AnimOfDots\obj\Debug\aod.dll
+C:\Users\Senato\source\repos\r\GitRepo\AnimOfDots\AnimOfDots\obj\Debug\aod.pdb

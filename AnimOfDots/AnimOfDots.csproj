@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>AnimOfDots</RootNamespace>
     <AssemblyName>aod</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -44,45 +46,42 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="res\resource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>resource.resx</DependentUpon>
+    <Compile Include="src\animation\Animator.cs" />
+    <Compile Include="src\animation\TimerStart.cs" />
+    <Compile Include="src\AOD.cs" />
+    <Compile Include="src\bitmap\ColorBlender.cs" />
+    <Compile Include="src\bitmap\ColorPalette.cs" />
+    <Compile Include="src\controls\Circular.cs">
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\BouncingDots.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="src\controls\ColorfulCircular.cs">
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\Circular.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="src\controls\ColorfulDot.cs">
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\ColorfulCircular.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="src\controls\DotFlashing.cs">
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\ColorfulDot.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="src\controls\DotGridFlashing.cs">
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\Overlay.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="src\controls\DotTyping.cs">
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\Spiral.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="src\controls\DoubleDotSpin.cs">
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\ThreeDot.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="src\controls\MultiplePulse.cs">
+      <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\WaterDropWaves.cs">
-      <SubType>UserControl</SubType>
+    <Compile Include="src\controls\Overlay.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\controls\Pulse.cs">
+      <SubType>Component</SubType>
     </Compile>
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="res\resource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>resource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\colors.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
