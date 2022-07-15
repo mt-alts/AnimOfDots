@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace AnimOfDots
-{
-    public class DotGridFlashing : AOD.BaseControl
-    {
+namespace AnimOfDots {
+    public class DotGridFlashing : AOD.BaseControl {
+
         private Bitmap bitmapColorPalette = null;
-        private byte colorAlpha = 150;
         private float dotsSize = 0;
         private readonly PointF[] pointF = new PointF[9];
         private readonly SolidBrush[] solidBrush = new SolidBrush[9];
@@ -17,24 +14,21 @@ namespace AnimOfDots
         private readonly Random random = new Random();
         private readonly Color[] colors = new Color[3] { Color.SkyBlue, Color.SkyBlue, Color.DeepSkyBlue };
 
-        public byte ColorAlpha
-        {
+        private byte colorAlpha = 150;
+        public byte ColorAlpha {
             get => colorAlpha;
-            set
-            {
+            set {
                 colorAlpha = value;
                 CreateColorPalettte();
-                SetColors();
+                UpdateColors();
                 Refresh();
             }
         }
 
-        public DotGridFlashing()
-        {
+        public DotGridFlashing() {
             DoubleBuffered = true;
             AnimationSpeedBalance(50);
             Size = new Size(100, 100);
-
             solidBrushCountList[0] = 0;
             solidBrushCountList[1] = 5;
             solidBrushCountList[2] = 1;
@@ -44,42 +38,34 @@ namespace AnimOfDots
             solidBrushCountList[6] = 3;
             solidBrushCountList[7] = 8;
             solidBrushCountList[8] = 4;
-
-
-            for (int i = 0; i < solidBrush.Length; i++)
-            {
+            for (int i = 0; i < solidBrush.Length; i++) {
                 solidBrush[i] = new SolidBrush(colors[random.Next(0, 3)]);
             }
-            SetPoints();
+            UpdatePoints();
             ForeColor = Color.DodgerBlue;
             CreateColorPalettte();
         }
 
-        protected override void Animate()
-        {
+        protected override void Animate() {
             base.Animate();
-            SetColors();
+            UpdateColors();
             Refresh();
         }
 
-        private void SetColors()
-        {
-            for (int i = 0; i < solidBrushCountList.Length; i++)
-            {
+        private void UpdateColors() {
+            for (int i = 0; i < solidBrushCountList.Length; i++) {
                 solidBrushCountList[i] = (solidBrushCountList[i] + 1) % 10;
                 solidBrush[i].Color = bitmapColorPalette.GetPixel(solidBrushCountList[i], 1);
             }
         }
 
-        private void CreateColorPalettte()
-        {
+        private void CreateColorPalettte() {
             bitmapColorPalette = new ColorPalette(10, 2).CreateBlendedColorPalette(
                 new ColorBlender(new Color[3] { Color.FromArgb(colorAlpha, ForeColor), ForeColor, Color.FromArgb(colorAlpha, ForeColor) },
                 new float[3] { 0.0f, 0.5f, 1.0f }));
         }
 
-        private void SetPoints()
-        {
+        private void UpdatePoints() {
             pointF[0] = new PointF(((Width / 3) / 2), ((Height / 3) / 2));
             pointF[1] = new PointF((Width / 2), pointF[0].Y);
             pointF[2] = new PointF(((Width - (Width / 3)) + pointF[0].X), pointF[0].Y);
@@ -91,35 +77,29 @@ namespace AnimOfDots
             pointF[8] = new PointF(pointF[2].X, pointF[6].Y);
         }
 
-        private void SetRectangles()
-        {
-            for (int i = 0; i < rectsF.Length; i++)
-            {
+        private void SetRectangles() {
+            for (int i = 0; i < rectsF.Length; i++) {
                 rectsF[i] = new RectangleF(pointF[i].X - (dotsSize / 2), pointF[i].Y - (dotsSize / 2), dotsSize, dotsSize);
             }
         }
 
-        protected override void OnForeColorChanged(EventArgs e)
-        {
+        protected override void OnForeColorChanged(EventArgs e) {
             base.OnForeColorChanged(e);
             CreateColorPalettte();
-            SetColors();
+            UpdateColors();
             Refresh();
         }
 
-        protected override void OnResize(EventArgs e)
-        {
+        protected override void OnResize(EventArgs e) {
             base.OnResize(e);
             dotsSize = Height * 0.2f;
-            SetPoints();
+            UpdatePoints();
             SetRectangles();
         }
 
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-            for (int i = 0; i < rectsF.Length; i++)
-            {
+        protected override void OnPaint(PaintEventArgs e) {
+            e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+            for (int i = 0; i < rectsF.Length; i++) {
                 e.Graphics.FillEllipse(solidBrush[i], rectsF[i]);
             }
             base.OnPaint(e);

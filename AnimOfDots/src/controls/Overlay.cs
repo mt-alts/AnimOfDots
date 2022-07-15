@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
-namespace AnimOfDots
-{
-    public class Overlay : AOD.BaseControl
-    {
+namespace AnimOfDots {
+    public class Overlay : AOD.BaseControl {
+
         private Bitmap bitmapColorPalette = null;
         private Bitmap bmp;
         private readonly SolidBrush[] solidBrushes = new SolidBrush[8];
@@ -20,20 +18,15 @@ namespace AnimOfDots
         public Color[] colors = new Color[3] { Color.DodgerBlue,
                                                Color.FromArgb(100, Color.DeepSkyBlue),
                                                Color.FromArgb(0, Color.LightSkyBlue) };
-        public Color[] Colors
-        {
+        public Color[] Colors {
             get => colors;
-            set
-            {
-                if (colors.Length == value.Length)
-                {
+            set {
+                if (colors.Length == value.Length) {
                     colors = value;
                     CreateColorPalette();
-                    SetColors();
+                    UpdateColors();
                     Refresh();
-                }
-                else
-                {
+                } else {
                     throw new Exception("Array must have three elements");
                 }
             }
@@ -41,22 +34,18 @@ namespace AnimOfDots
 
         public override Color ForeColor => base.ForeColor;
 
-        public Overlay()
-        {
+        public Overlay() {
             DoubleBuffered = true;
             AnimationSpeedBalance(100);
-            for (int i = 0; i < solidBrushes.Length; i++)
-            {
+            for (int i = 0; i < solidBrushes.Length; i++) {
                 solidBrushes[i] = new SolidBrush(Color.DodgerBlue);
             }
             Size = new Size(48, 48);
         }
 
-        protected override void Animate()
-        {
+        protected override void Animate() {
             base.Animate();
-            for (int i = 0; i < imagePixel.Length; i++)
-            {
+            for (int i = 0; i < imagePixel.Length; i++) {
                 imagePixel[i] = (imagePixel[i] + 1) % bitmapColorPalette.Width;
                 colorPixelArray[i] = bitmapColorPalette.GetPixel(imagePixel[i], 1);
                 solidBrushes[i].Color = colorPixelArray[i];
@@ -65,29 +54,24 @@ namespace AnimOfDots
             Refresh();
         }
 
-        private void FillBitmap()
-        {
-            using (Graphics graphics = Graphics.FromImage(bmp))
-            {
-                graphics.Clear(BackColor);
-                graphics.SmoothingMode = SmoothingMode.HighQuality;
-                for (int i = 0; i < solidBrushes.Length; i++)
-                {
+        private void FillBitmap() {
+            using (Graphics graphics = Graphics.FromImage(bmp)) {
+                graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                graphics.Clear(Color.Transparent);
+                for (int i = 0; i < solidBrushes.Length; i++) {
                     graphics.FillEllipse(solidBrushes[i], rects[i]);
                 }
             }
         }
 
-        private void SetScale()
-        {
+        private void UpdateScale() {
             dotSize = Height / 4.5f;
             sizeW = Width - dotSize - 1;
             sizeH = Height - dotSize - 1;
         }
 
-        private void SetPoints()
-        {
-            SetScale();
+        private void UpdatePoints() {
+            UpdateScale();
             pf[0] = new PointF(sizeW / 2, 0);
             pf[2] = new PointF(sizeW, sizeH / 2);
             pf[4] = new PointF(sizeW / 2, sizeH);
@@ -98,20 +82,16 @@ namespace AnimOfDots
             pf[7] = new PointF(pf[0].X / 3, pf[6].Y / 3);
         }
 
-        private void CreateColorPalette()
-        {
+        private void CreateColorPalette() {
             bitmapColorPalette = new ColorPalette(8, 2).CreateBlendedColorPalette(
                 new ColorBlender(colors, new float[3] { 0f, 0.5f, 1f }));
         }
 
-        private void SetColors()
-        {
-            if (bitmapColorPalette == null)
-            {
+        private void UpdateColors() {
+            if (bitmapColorPalette == null) {
                 CreateColorPalette();
             }
-            for (int i = 0; i < colorPixelArray.Length; i++)
-            {
+            for (int i = 0; i < colorPixelArray.Length; i++) {
                 colorPixelArray[i] = bitmapColorPalette.GetPixel(imagePixel[i], 1);
                 solidBrushes[i].Color = colorPixelArray[i];
             }
@@ -119,33 +99,22 @@ namespace AnimOfDots
             Refresh();
         }
 
-        private void SetRectangles()
-        {
-            for (int i = 0; i < rects.Length; i++)
-            {
+        private void UpdateRectangles() {
+            for (int i = 0; i < rects.Length; i++) {
                 rects[i] = new RectangleF(pf[i].X, pf[i].Y, dotSize, dotSize);
             }
         }
 
-        protected override void OnBackColorChanged(EventArgs e)
-        {
-            base.OnBackColorChanged(e);
-            FillBitmap();
-            Refresh();
-        }
-
-        protected override void Reset()
-        {
+        protected override void Reset() {
             base.Reset();
             bmp = new Bitmap(Width, Height);
             imagePixel = new int[8] { 7, 6, 5, 4, 3, 2, 1, 0 };
-            SetPoints();
-            SetRectangles();
-            SetColors();
+            UpdatePoints();
+            UpdateRectangles();
+            UpdateColors();
         }
 
-        protected override void OnResize(EventArgs e)
-        {
+        protected override void OnResize(EventArgs e) {
             base.OnResize(e);
             Reset();
         }
@@ -153,8 +122,6 @@ namespace AnimOfDots
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
-            e.Graphics.SmoothingMode = SmoothingMode.HighQuality;
-            e.Graphics.Clear(BackColor);
             e.Graphics.DrawImage(bmp, 0, 0);
         }
     }

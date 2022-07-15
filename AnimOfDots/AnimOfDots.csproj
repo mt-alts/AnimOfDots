@@ -50,7 +50,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="src\animation\Animator.cs" />
-    <Compile Include="src\animation\TimerStart.cs" />
+    <Compile Include="src\animation\AnimatorStart.cs" />
     <Compile Include="src\AOD.cs" />
     <Compile Include="src\bitmap\ColorBlender.cs" />
     <Compile Include="src\bitmap\ColorPalette.cs" />
@@ -60,13 +60,13 @@
     <Compile Include="src\controls\ColorfulCircular.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="src\controls\ColorfulDot.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="src\controls\DotFlashing.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\controls\DotGridFlashing.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="src\controls\DotScaling.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="src\controls\DotTyping.cs">
@@ -86,5 +86,6 @@
     </Compile>
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
