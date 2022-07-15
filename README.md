@@ -4,13 +4,13 @@
 #
 Preview:
 
-<img src="https://raw.githubusercontent.com/mt-alts/AnimOfDots/main/preview.gif" width=230 height=214/>
+<img src="https://raw.githubusercontent.com/mt-alts/AnimOfDots/main/preview.gif"/>
 
 <table>
   <tr>
     <td>Pulse</td>
     <td>Circular</td>
-    <td>ColorfulDot</td>
+    <td>DotScaling</td>
   </tr>
   <tr>
     <td>DotGridFlashing</td>
@@ -27,39 +27,34 @@ Preview:
 #
 
 ## Properties and Methods
-#### Common property and methods
+### Common property and methods
 | Property or Method | Type  | Description |
 | :-------- | :------- | :------------------------- |
 | AnimationSpeed | Property | Changes animation speed |
 | BackColor | Property | Changes the background color of the indicator |
 | Start() | Method | Start animating |
 | Stop() | Method | Stop animating |
-
-#### Circular, DotTyping, DoubleDotSpin, Pulse, MultiplePulse
+#
+#### Circular, DotGridFlashing, DotTyping, DoubleDotSpin, Pulse, MultiplePulse
 | Property or Method | Type | Description  |
 | :-------- | :------- | :------------------------- |
 | ForeColor | Property | Changes the color of the indicator |
-
-#### Overlay, ColorfulCircular
+#
+#### Overlay, ColorfulCircular, DotScaling
 | Property or Method | Type | Description   |
 | :-------- | :------- | :------------------------- |
 | Colors | Property | Changes the color of the indicator <br /> according to the color array |
-  
-#### ColorfulDot
-| Property or Method | Type | Description |
-| :-------- | :------- | :------------------------- |
-| Colors | Property | Changes the color of the indicator <br /> according to the color array |
-| BorderColor | Property | Changes the border color |
-| BorderSize  | Property  | Changes the border size |
- 
+#
 #### DotGridFlashing
 | Property or Method | Type | Description |
 | :-------- | :------- | :------------------------- |
 | ColorAlpha | Property | Changes the transparency level of <br /> half of the indicator elements |
-| ForeColor | Property | Changes the color of the indicator  |
-
-#### DotFlashing
+#
+#### DotFlashing, DoubleDotSpin
 | Property or Method | Type | Description |
 | :-------- | :------- | :------------------------- |
 | PrimaryColor | Property | Changes the primary color         |
 | SecondaryColor | Property | Changes the secondary color     |
+#
+ℹ️ The aspect ratio must be the same for the control to work properly.</br>
+⚠️ Performance loss may occur if the animation speed is set too high.
