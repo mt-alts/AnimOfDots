@@ -56,5 +56,5 @@ Preview:
 | PrimaryColor | Property | Changes the primary color         |
 | SecondaryColor | Property | Changes the secondary color     |
 #
-ℹ️ The aspect ratio must be the same for the control to work properly.</br>
+ ℹ️ Some controls must have the same aspect ratio to work properly.</br>
 ⚠️ Performance loss may occur if the animation speed is set too high.
