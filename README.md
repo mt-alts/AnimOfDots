@@ -57,4 +57,3 @@ Preview:
 | SecondaryColor | Property | Changes the secondary color     |
 #
  ℹ️ Some controls must have the same aspect ratio to work properly.</br>
-⚠️ Performance loss may occur if the animation speed is set too high.
